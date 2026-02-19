@@ -66,4 +66,38 @@ class PostsController extends Controller
             'data' => $post
         ]);
     }
+
+    public function update(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'content' => 'required',
+            'image_url' => 'required'
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post not found'
+            ], 404);
+        }
+
+        $post->update([
+            'content' => $request->content,
+            'image_url' => $request->image_url
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Post updated successfully',
+            'data' => $post
+        ]);
+    }
 }
