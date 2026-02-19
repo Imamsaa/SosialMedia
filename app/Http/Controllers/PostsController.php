@@ -16,7 +16,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::get();
+        $posts = Post::with(['user', 'comments', 'likes'])->get();
         return response()->json([
             'success' => true,
             'data' => $posts
