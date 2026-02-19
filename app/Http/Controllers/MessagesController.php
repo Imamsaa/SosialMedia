@@ -59,6 +59,24 @@ class MessagesController extends Controller
         ]);
     }
 
+    public function getMessages($id)
+    {
+        $messages = Message::where('receiver_id', $id)->get();
+
+        if ($messages->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No messages found for this user'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Messages retrieved successfully',
+            'data' => $messages
+        ]);
+    }
+
     public function destroy($id)
     {
         $message = Message::find($id);
