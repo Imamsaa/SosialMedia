@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CommentsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -16,5 +17,10 @@ Route::prefix('v1')->group(function(){
         Route::get('/{id}', [PostsController::class, 'show']); //Mengambil data post berdasarkan ID.
         Route::put('/{id}', [PostsController::class, 'update']); //Mengupdate data post berdasarkan ID.
         Route::delete('/{id}', [PostsController::class, 'destroy']); //Menghapus data post berdasarkan ID.
+    });
+
+    Route::prefix('comments')->group(function(){
+        Route::post('/', [CommentsController::class, 'store']);
+        Route::delete('/{id}', [CommentsController::class, 'destroy']);
     });
 });
