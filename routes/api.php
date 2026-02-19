@@ -8,13 +8,10 @@ use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\JWTAuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 Route::prefix('v1')->group(function(){
 
     Route::post('/register', [JWTAuthController::class, 'register']);
+    Route::post('/login', [JWTAuthController::class, 'login']);
 
     //menghandle route untuk posts
     Route::prefix('posts')->group(function() {
