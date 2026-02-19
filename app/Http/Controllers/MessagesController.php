@@ -40,4 +40,22 @@ class MessagesController extends Controller
             'data' => $message
         ], 201);
     }
+
+    public function show($id)
+    {
+        $message = Message::find($id);
+
+        if (!$message) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Message not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Message retrieved successfully',
+            'data' => $message
+        ]);
+    }
 }
